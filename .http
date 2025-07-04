@@ -1,0 +1,16 @@
+### Create User
+POST http://127.0.0.1:8000/api/user_progress
+Content-Type: application/json
+
+{
+  "xp": 0
+}
+
+### Increase XP
+POST http://127.0.0.1:8000/api/xp/increase/1
+
+### Reset XP
+POST http://127.0.0.1:8000/api/xp/reset/1
+
+### Get User XP
+GET http://127.0.0.1:8000/api/books/search/lord
