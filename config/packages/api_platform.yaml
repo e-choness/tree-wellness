@@ -1,7 +1,11 @@
 api_platform:
-    title: Hello API Platform
+    title: "My Dummy API"
     version: 1.0.0
+    description: |
+        This is a test API.
+        Made with love
+    use_symfony_listeners: true
     defaults:
         stateless: true
         cache_headers:
-            vary: ['Content-Type', 'Authorization', 'Origin']
+            vary: ["Content-Type", "Authorization", "Origin"]
