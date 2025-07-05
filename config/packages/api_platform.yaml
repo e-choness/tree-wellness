@@ -5,6 +5,8 @@ api_platform:
         This is a test API.
         Made with love
     use_symfony_listeners: true
+    enable_swagger_ui: true
+    enable_re_doc: true
     defaults:
         stateless: true
         cache_headers:
