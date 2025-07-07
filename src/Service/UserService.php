@@ -2,72 +2,64 @@
 
 namespace App\Service;
 
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+use App\Entity\User;
+use App\Entity\UserProgress;
+use Doctrine\ORM\EntityManagerInterface;
 
 class UserService
 {
-    private HttpClientInterface $httpClient;
+    private EntityManagerInterface $entityManager;
 
-    public function __construct(HttpClientInterface $httpClient)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->httpClient = $httpClient;
+        $this->entityManager = $entityManager;
     }
 
-    public function createUserWithProgress(string $username): array
+    // A function to create a user with userRepsitory
+    public function createUser(string $username): array
     {
-        $requests = [
-            'user' => ['route' => 'create_user', 'payload' => ['username' => $username]],
-            'userProgress' => ['route' => 'create_user_progress', 'payload' => ['username' => $username]],
-        ];
+        if (empty($username)) {
+            return [
+                'error' => [
+                    'message' => 'Username is required',
+                    'status' => 400,
+                ],
+                'status' => 400,
+            ];
+        }
 
-        $responses = $this->executeConcurrentRequests($requests);
+        $user = new User();
+        $user->setUsername($username);
 
-        foreach ($responses as $key => $response) {
-            if ($response['statusCode'] !== 201) {
-                return [
-                    'error' => [
-                        'message' => 'Failed to create ' . $key,
-                        'status' => $response['statusCode'],
-                        'details' => $response['content'],
-                    ],
-                    'status' => $response['statusCode'],
-                ];
-            }
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        // Create User Progress after creating the user
+        $userProgressResponse = $this->createUserProgress($username, $user);
+
+        if ($userProgressResponse['error']) {
+            return $userProgressResponse;
         }
 
         return [
-            'data' => [
-                'user' => $responses['user']['content'],
-                'userProgress' => $responses['userProgress']['content'],
-            ],
+            'data' => ['id' => $user->getId(), 'username' => $user->getUsername()],
             'error' => null,
         ];
     }
 
-    private function executeConcurrentRequests(array $requests): array
+    private function createUserProgress(string $username, User $user): array
     {
-        $httpRequests = [];
-        foreach ($requests as $key => $request) {
-            $httpRequests[$key] = $this->httpClient->request('POST', $request['route'], [
-                'json' => $request['payload'],
-            ]);
-        }
+        // Assuming UserProgress is an entity that tracks user progress
+        $userProgress = new UserProgress();
+        $userProgress->setUser($user); // Set associated User
+        $userProgress->setXp(0); // Initialize XP to 0
 
-        $responses = [];
-        foreach ($this->httpClient->stream($httpRequests) as $response) {
-            // Find the original key for the current response
-            $key = array_search($response, $httpRequests, true);
+        $this->entityManager->persist($userProgress);
+        $this->entityManager->flush();
 
-            if ($key === false) {
-                throw new \RuntimeException('Unexpected response received.');
-            }
-
-            $responses[$key] = [
-                'statusCode' => $response->getInformationalStatus()[0],
-                'content' => json_decode($response->getContent(false), true),
-            ];
-        }
-
-        return $responses;
+        return [
+            'data' => ['id' => $userProgress->getId(), 'user id' => $userProgress->getUser()->getId(), 'xp' => $userProgress->getXp()],
+            'error' => null,
+        ];
     }
 }

@@ -17,22 +17,16 @@ class UserController extends AbstractController
         $this->userService = $userService;
     }
 
-    #[Route('/api/user/{username}', name: 'create_user_with_progress', methods: ['POST'])]
-    public function createUserWithProgress(string $username): JsonResponse
+    #[Route('/api/user/create/{username}', name: 'create_user', methods: ['POST'])]
+    public function createUser(string $username): JsonResponse
     {
-        // Validate the username
-        if (empty($username)) {
-            return $this->json(['error' => 'Username is required'], 400);
-        }
-
-        // Call the service to create the user with progress
-        $result = $this->userService->createUserWithProgress($username);
+        $result = $this->userService->createUser($username);
 
         if ($result['error']) {
             return $this->json($result['error'], $result['status']);
         }
 
-        return $this->json($result['data'], 201);
+        return $this->json(['message' => 'User created successfully', 'username' => $username], 201);
     }
 
     // #[Route('/api/user/{id}/progress', name: 'get_user_progress', methods: ['GET'])]

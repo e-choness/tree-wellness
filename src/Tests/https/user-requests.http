@@ -3,7 +3,7 @@
 ###
 # Create User with Progress
 ###
-POST {{api_base_url}}/user/testuser
+POST {{api_base_url}}/user/create/testuser
 Content-Type: application/json
 Accept: application/json
 
