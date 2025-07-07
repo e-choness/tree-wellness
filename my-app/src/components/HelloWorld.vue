@@ -6,7 +6,7 @@
           <v-progress-linear
             :value="xp"
             max="1000"
-            color="primary"
+            :color="progressColor"
             height="20"
             class="my-4"
           >
@@ -32,11 +32,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 
 const xp = ref(0);
 const userId = 1; // Assuming 1 user
 const apiBaseUrl = "http://127.0.0.1:8000/api/user-progress"; // Base URL for API
+
+// Function to calculate the color based on XP percentage
+const progressColor = computed(() => {
+  const percentage = (xp.value / 1000) * 100;
+  return `hsl(${percentage * 1.2}, 100%, 50%)`; // HSL for rainbow gradient
+});
 
 const fetchProgress = async () => {
   try {
