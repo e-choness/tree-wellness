@@ -9,6 +9,7 @@ import { registerPlugins } from '@/plugins'
 
 // Components
 import App from './App.vue'
+import router from './router';
 
 // Composables
 import { createApp } from 'vue'
@@ -16,7 +17,7 @@ import { createApp } from 'vue'
 // Styles
 import 'unfonts.css'
 
-const app = createApp(App)
+const app = createApp(App).use(router);
 
 registerPlugins(app)
 
