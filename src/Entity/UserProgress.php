@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserProgressRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserProgressRepository::class)]
 #[ApiResource]
@@ -16,6 +17,7 @@ class UserProgress
     private ?int $id = 0;
 
     #[ORM\Column]
+    #[Assert\Range(min: 0, max: 1000)]
     private ?int $xp = 0;
 
     #[ORM\OneToOne(inversedBy: 'userProgress', cascade: ['persist', 'remove'])]
@@ -34,7 +36,7 @@ class UserProgress
         return $this;
     }
 
-    public function getXp(): ?int
+    public function getXp(): int
     {
         return $this->xp;
     }
@@ -45,6 +47,7 @@ class UserProgress
 
         return $this;
     }
+
     public function getUser(): ?User
     {
         return $this->user;
