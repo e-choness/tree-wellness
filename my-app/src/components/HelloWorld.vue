@@ -1,129 +1,74 @@
 <template>
   <v-container class="fill-height" max-width="900">
     <div>
+      <v-img class="mb-4" height="150" src="@/assets/logo.png" />
+
+      <div class="mb-8 text-center">
+        <div class="text-body-2 font-weight-light mb-n1">Welcome to</div>
+        <h1 class="text-h2 font-weight-bold">Vuetify</h1>
+      </div>
+
       <v-row>
         <v-col cols="12">
-          <v-progress-linear
-            :value="xp"
-            max="1000"
-            :color="progressColor"
-            height="20"
-            class="my-4"
-          >
-            <strong>{{ xp }} / 1000 XP</strong>
-          </v-progress-linear>
+          <v-card class="py-4" color="surface-variant"
+            image="https://cdn.vuetifyjs.com/docs/images/one/create/feature.png"
+            prepend-icon="mdi-rocket-launch-outline" rounded="lg" variant="tonal">
+            <template #image>
+              <v-img position="top right" />
+            </template>
+
+            <template #title>
+              <h2 class="text-h5 font-weight-bold">
+                Get started
+              </h2>
+            </template>
+
+            <template #subtitle>
+              <div class="text-subtitle-1">
+                Change this page by updating <v-kbd>{{ `
+                  <HelloWorld />` }}
+                </v-kbd> in <v-kbd>components/HelloWorld.vue</v-kbd>.
+              </div>
+            </template>
+          </v-card>
         </v-col>
-      </v-row>
-      <v-row>
-        <v-col v-for="link in links" :key="link.title" cols="12">
-          <v-btn
-            :color="link.color"
-            :icon="link.icon"
-            class="my-2 square-btn"
-            block
-            @click="link.action"
-          >
-            {{ link.title }}
-          </v-btn>
+
+        <v-col v-for="link in links" :key="link.href" cols="6">
+          <v-card append-icon="mdi-open-in-new" class="py-4" color="surface-variant" :href="link.href"
+            :prepend-icon="link.icon" rel="noopener noreferrer" rounded="lg" :subtitle="link.subtitle" target="_blank"
+            :title="link.title" variant="tonal" />
         </v-col>
       </v-row>
     </div>
+    <Progress></Progress>
   </v-container>
 </template>
 
-<script setup>
-import { ref, onMounted, computed } from "vue";
-
-const xp = ref(0);
-const userId = 1; // Assuming 1 user
-const apiBaseUrl = "http://127.0.0.1:8000/api/user-progress"; // Base URL for API
-
-// Function to calculate the color based on XP percentage
-const progressColor = computed(() => {
-  const percentage = (xp.value / 1000) * 100;
-  return `hsl(${percentage * 1.2}, 100%, 50%)`; // HSL for rainbow gradient
-});
-
-const fetchProgress = async () => {
-  try {
-    const res = await fetch(`${apiBaseUrl}/${userId}/xp`);
-    if (!res.ok) throw new Error("Failed to fetch progress");
-    const data = await res.json();
-    xp.value = data.xp;
-  } catch (error) {
-    console.error(error);
-    alert(`Error fetching XP: ${error.message}`);
-  }
-};
-
-const increaseXp = async () => {
-  if (xp.value >= 1000) {
-    alert("XP is already at the maximum value of 1000!");
-    return;
-  }
-
-  try {
-    const res = await fetch(`${apiBaseUrl}/${userId}/xp/add/50`, {
-      method: "POST",
-    });
-    if (!res.ok) throw new Error("Failed to increase XP");
-    fetchProgress();
-  } catch (error) {
-    console.error(error);
-    alert("Error increasing XP");
-  }
-};
-
-const resetXp = async () => {
-  try {
-    const res = await fetch(`${apiBaseUrl}/${userId}/xp/reset`, {
-      method: "POST",
-    });
-    if (!res.ok) throw new Error("Failed to reset XP");
-    fetchProgress();
-  } catch (error) {
-    console.error(error);
-    alert("Error resetting XP");
-  }
-};
-
+<script setup lang="ts">
 const links = [
   {
-    title: "Fetch Progress",
-    icon: "mdi-chart-line",
-    color: "primary",
-    action: fetchProgress,
+    href: 'https://vuetifyjs.com/',
+    icon: 'mdi-text-box-outline',
+    subtitle: 'Learn about all things Vuetify in our documentation.',
+    title: 'Documentation',
   },
   {
-    title: "Increase XP",
-    icon: "mdi-plus-circle",
-    color: "success",
-    action: increaseXp,
+    href: 'https://vuetifyjs.com/introduction/why-vuetify/#feature-guides',
+    icon: 'mdi-star-circle-outline',
+    subtitle: 'Explore available framework Features.',
+    title: 'Features',
   },
   {
-    title: "Reset XP",
-    icon: "mdi-refresh",
-    color: "error",
-    action: resetXp,
+    href: 'https://vuetifyjs.com/components/all',
+    icon: 'mdi-widgets-outline',
+    subtitle: 'Discover components in the API Explorer.',
+    title: 'Components',
   },
-];
-
-onMounted(() => {
-  fetchProgress();
-});
+  {
+    href: 'https://discord.vuetifyjs.com',
+    icon: 'mdi-account-group-outline',
+    subtitle: 'Connect with Vuetify developers.',
+    title: 'Community',
+  },
+]
 </script>
-
-<style>
-.v-btn {
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: 0; /* Makes the buttons square */
-}
-
-.v-progress-linear {
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  line-height: 20px;
-}
-</style>
