@@ -1,73 +1,131 @@
-# Welcome to your Lovable project
+# Arbor Vista — Tree Sensor Map & 3D NeRF Viewer
 
-## Project info
+Arbor Vista is a web application designed to visualize and interpret environmental sensor data for tree wellness. It features a live map displaying simulated "Dryad-like" sensors, detailed telemetry readings, AI-driven tree personas, and an interactive 3D viewer.
 
-**URL**: https://lovable.dev/projects/1d092a0b-cf6c-488c-a299-d0bf4de38f94
+## Features
 
-## How can I edit this code?
+- **Interactive Map:** Explore simulated tree sensors on a Leaflet map.
+- **Real-time Telemetry:** View detailed sensor readings including temperature, humidity, air quality (IAQ, VOC, CO), and battery levels.
+- **AI Persona Insights:** Translate complex sensor metrics into an easy-to-understand "friendly tree voice" with health scores and recommended actions, powered by AI.
+- **3D Viewer:** Immerse yourself in a 3D representation of the sensor's environment, providing a unique perspective on tree health.
 
-There are several ways of editing your application.
+## Technologies Used
 
-**Use Lovable**
+- **Frontend:** React.js
+- **Language:** TypeScript
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS
+- **UI Components:** Shadcn UI, Radix UI
+- **Mapping:** Leaflet, React-Leaflet
+- **3D Graphics:** React Three Fiber, Drei, Three.js
+- **Routing:** React Router DOM
+- **State Management/Data Fetching:** React Query
+- **Forms:** React Hook Form
+- **Date Handling:** Date-fns
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1d092a0b-cf6c-488c-a299-d0bf4de38f94) and start prompting.
+## Installation
 
-Changes made via Lovable will be committed automatically to this repo.
+To get a local copy up and running, follow these simple steps.
 
-**Use your preferred IDE**
+### Prerequisites
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Node.js (LTS version recommended)
+- npm or yarn or bun
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Setup
 
-Follow these steps:
+1. Clone the repository:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+   ```bash
+   git clone https://github.com/your-username/tree-wellness.git
+   cd tree-wellness
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2. Install dependencies:
 
-# Step 3: Install the necessary dependencies.
-npm i
+   ```bash
+   npm install
+   # or yarn install
+   # or bun install
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   # or yarn dev
+   # or bun dev
+   ```
+
+   The application will be accessible at `http://localhost:5173` (or another port if 5173 is in use).
+
+## Usage
+
+- **Map Interaction:** Click on any sensor icon on the map to view its detailed telemetry and AI persona insights.
+- **AI Persona:** After selecting a sensor, click "Get Insights" to generate a personalized tree persona.
+- **3D View:** Click "Open 3D View" from the sensor details drawer to launch the interactive 3D representation of the selected sensor's location.
+
+## Project Structure
+
+```bash
+.
+├── public/                 # Static assets
+├── src/
+│   ├── App.css             # Global CSS
+│   ├── App.tsx             # Main application component and routing
+│   ├── index.css           # Tailwind CSS entry point
+│   ├── main.tsx            # React entry point
+│   ├── vite-env.d.ts       # Vite environment types
+│   ├── components/         # Reusable UI components
+│   │   ├── MapLeaflet.tsx  # Leaflet map component
+│   │   ├── theme-toggle.tsx# Theme toggle component
+│   │   ├── ThreeViewer.tsx # Three.js 3D viewer component
+│   │   └── ui/             # Shadcn UI components
+│   ├── hooks/              # Custom React hooks
+│   ├── lib/                # Utility functions and data generation
+│   │   ├── persona.ts      # AI persona generation logic
+│   │   ├── simulator.ts    # Sensor data simulation
+│   │   └── utils.ts        # General utilities
+│   ├── pages/              # Application pages
+│   │   ├── Index.tsx       # Main map and sensor display page
+│   │   ├── NotFound.tsx    # 404 page
+│   │   └── Viewer3D.tsx    # 3D viewer page
+│   └── types/              # TypeScript type definitions
+│       └── sensor.ts       # Sensor data types
+├── .gitignore              # Git ignore file
+├── package.json            # Project dependencies and scripts
+├── tailwind.config.ts      # Tailwind CSS configuration
+├── tsconfig.json           # TypeScript configuration
+├── vite.config.ts          # Vite build configuration
+└── README.md               # Project README
 ```
 
-**Edit a file directly in GitHub**
+## Contributing
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+We welcome contributions to Arbor Vista! If you'd like to contribute, please follow these steps:
 
-**Use GitHub Codespaces**
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/your-feature-name`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'Add new feature'`).
+5. Push to the branch (`git push origin feature/your-feature-name`).
+6. Open a Pull Request.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Please ensure your code adheres to the existing style and conventions.
 
-## What technologies are used for this project?
+## License
 
-This project is built with:
+This project is licensed under the [MIT License](LICENSE.md).
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Acknowledgements
 
-## How can I deploy this project?
+- Thanks to the creators of React, Vite, Tailwind CSS, and all the libraries used in this project.
+- Special thanks to the open-source community for providing invaluable tools and resources.
 
-Simply open [Lovable](https://lovable.dev/projects/1d092a0b-cf6c-488c-a299-d0bf4de38f94) and click on Share -> Publish.
+## Roadmap
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- [ ] Implement real-time sensor data integration.
+- [ ] Expand AI persona capabilities with more detailed insights.
+- [ ] Add historical data visualization for sensor readings.
+- [ ] Improve 3D viewer interactivity and realism.
+- [ ] Develop mobile-responsive layouts for all pages.
