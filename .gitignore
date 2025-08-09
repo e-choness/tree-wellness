@@ -149,6 +149,14 @@ dist
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
 # Local History for Visual Studio Code
 .history/
 
@@ -159,5 +167,8 @@ dist
 # Ignore all local history of files
 .history
 .ionide
+
+dist-ssr
+*.local
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node

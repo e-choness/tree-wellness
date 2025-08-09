@@ -1,211 +1,73 @@
-# Tree Wellness Sensor Simulator
+# Welcome to your Lovable project
 
-A comprehensive wildfire sensor simulator that generates realistic environmental data and publishes it via MQTT or HTTP.
+## Project info
 
-## Features
+**URL**: https://lovable.dev/projects/1d092a0b-cf6c-488c-a299-d0bf4de38f94
 
-- **Dual Generation Modes**: Random walk simulation or CSV replay
-- **Multiple Publishers**: MQTT and HTTP POST support
-- **JSON Schema Validation**: Ensures all generated data complies with the sensor schema
-- **Configurable**: CLI flags for devices, frequency, seed, and more
-- **Dockerized**: Ready-to-run Docker container with docker-compose setup
-- **Comprehensive Testing**: Unit tests for schema compliance
+## How can I edit this code?
 
-## Quick Start
+There are several ways of editing your application.
 
-### Local Development
+**Use Lovable**
 
-```bash
-# Install dependencies
-npm install
+Simply visit the [Lovable Project](https://lovable.dev/projects/1d092a0b-cf6c-488c-a299-d0bf4de38f94) and start prompting.
 
-# Install TypeScript and Jest locally (if not installed)
-npm install --save-dev typescript jest ts-jest @types/jest
+Changes made via Lovable will be committed automatically to this repo.
 
-# Build the project
-npm run build
+**Use your preferred IDE**
 
-# Run with default settings (console output only)
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+Follow these steps:
+
+```sh
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
+
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
+
+# Step 3: Install the necessary dependencies.
+npm i
+
+# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
-
-# Run with MQTT publishing
-npm run dev -- --num-devices 5 --frequency-seconds 10 --mqtt-broker mqtt://localhost:1883
-
-# Run with HTTP publishing
-npm run dev -- --num-devices 3 --frequency-seconds 5 --http-endpoint http://localhost:8080
-
-# Run with CSV replay
-npm run dev -- --mode csv-replay --csv-path data/sample-traces.csv --num-devices 2
 ```
 
-### Docker
+**Edit a file directly in GitHub**
 
-```bash
-# Build and run with docker-compose (includes MQTT broker)
-docker-compose up --build
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
 
-# Run standalone container
-docker build -t sensor-simulator .
-docker run sensor-simulator node dist/cli.js --num-devices 3 --frequency-seconds 15
-```
+**Use GitHub Codespaces**
 
-## CLI Options
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-| Option                    | Description                                     | Default           |
-| ------------------------- | ----------------------------------------------- | ----------------- |
-| `-n, --num-devices`       | Number of devices to simulate                   | 1                 |
-| `-f, --frequency-seconds` | Frequency in seconds between readings           | 30                |
-| `-s, --seed`              | Random seed for reproducible results            | Current timestamp |
-| `-m, --mode`              | Generation mode: `random-walk` or `csv-replay`  | random-walk       |
-| `-c, --csv-path`          | Path to CSV file for replay mode                | -                 |
-| `--mqtt-broker`           | MQTT broker URL (e.g., mqtt://localhost:1883)   | -                 |
-| `--http-endpoint`         | HTTP endpoint URL (e.g., http://localhost:8080) | -                 |
+## What technologies are used for this project?
 
-## Usage Examples
+This project is built with:
 
-### Basic Random Walk Simulation
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
 
-```bash
-npm run dev -- --num-devices 10 --frequency-seconds 30 --seed 12345
-```
+## How can I deploy this project?
 
-### MQTT Publishing
+Simply open [Lovable](https://lovable.dev/projects/1d092a0b-cf6c-488c-a299-d0bf4de38f94) and click on Share -> Publish.
 
-```bash
-npm run dev -- --num-devices 5 --mqtt-broker mqtt://broker.example.com:1883
-```
+## Can I connect a custom domain to my Lovable project?
 
-### CSV Replay Mode
+Yes, you can!
 
-```bash
-npm run dev -- --mode csv-replay --csv-path data/historical-data.csv --num-devices 3
-```
+To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
-### Multiple Publishers
-
-```bash
-npm run dev -- --mqtt-broker mqtt://localhost:1883 --http-endpoint http://localhost:8080
-```
-
-## Data Schema
-
-The simulator generates sensor readings with the following structure:
-
-```json
-{
-  "device_id": "silva-000123",
-  "timestamp_utc": "2025-08-09T23:16:45Z",
-  "firmware_version": "v1.4.2",
-  "location": {
-    "lat": 51.0447,
-    "lon": -114.0719,
-    "elevation_m": 1110
-  },
-  "battery": {
-    "voltage_v": 3.7,
-    "percent": 82
-  },
-  "radio": {
-    "rssi_dbm": -72,
-    "snr_db": 8
-  },
-  "microclimate": {
-    "temperature_c": 22.4,
-    "relative_humidity_pct": 38.2,
-    "air_pressure_hpa": 1011.3,
-    "soil_moisture_pct": null
-  },
-  "air_quality": {
-    "voc_ppb": 245,
-    "co_ppm": 0.5,
-    "pm1_ugm3": 3.1,
-    "pm2_5_ugm3": 6.8,
-    "pm10_ugm3": 9.7,
-    "iaq_index": 87
-  },
-  "smoke_index": {
-    "smoke_probability": 0.02,
-    "smoke_confidence": 0.11
-  },
-  "health": {
-    "last_calibrated_utc": "2025-07-27T09:00:00Z",
-    "error_flags": [],
-    "uptime_seconds": 1310400
-  },
-  "meta": {
-    "sensor_type": "wildfire_v2",
-    "manufacturer": "Dryad-like Co",
-    "notes": ""
-  }
-}
-```
-
-## Publishing Modes
-
-### MQTT
-
-- **Topic Pattern**: `sensors/{device_id}/telemetry`
-- **Format**: JSON payload
-- **QoS**: 0 (fire-and-forget)
-
-### HTTP POST
-
-- **Endpoint**: `POST /ingest`
-- **Content-Type**: `application/json`
-- **Timeout**: 5 seconds
-
-## Testing
-
-```bash
-# Run all tests
-npm test
-
-# Run tests in watch mode
-npm run test:watch
-
-# Run specific test file
-npm test -- schema.test.ts
-```
-
-## CSV Format
-
-For CSV replay mode, use the following column headers:
-
-- `device_id`, `lat`, `lon`, `elevation_m`
-- `battery_voltage_v`, `battery_percent`
-- `rssi_dbm`, `snr_db`
-- `temperature_c`, `humidity_pct`, `pressure_hpa`, `soil_moisture_pct`
-- `voc_ppb`, `co_ppm`, `pm1_ugm3`, `pm2_5_ugm3`, `pm10_ugm3`, `iaq_index`
-- `smoke_probability`, `smoke_confidence`
-- `last_calibrated_utc`, `error_flags`, `uptime_seconds`
-- `sensor_type`, `manufacturer`, `notes`
-
-See `data/sample-traces.csv` for an example.
-
-## Architecture
-
-- **Generators**: Random walk and CSV replay data generation
-- **Publishers**: MQTT and HTTP publishing with error handling
-- **Validation**: JSON Schema compliance checking
-- **CLI**: Commander.js-based command line interface
-- **Testing**: Jest-based unit testing
-
-## Development
-
-```bash
-# Install dependencies
-npm install
-
-# Start development with auto-reload
-npm run dev
-
-# Lint code
-npm run lint
-
-# Clean build artifacts
-npm run clean
-```
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
