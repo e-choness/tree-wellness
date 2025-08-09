@@ -1,0 +1,6 @@
+device_id,lat,lon,elevation_m,battery_voltage_v,battery_percent,rssi_dbm,snr_db,temperature_c,humidity_pct,pressure_hpa,soil_moisture_pct,voc_ppb,co_ppm,pm1_ugm3,pm2_5_ugm3,pm10_ugm3,iaq_index,smoke_probability,smoke_confidence,last_calibrated_utc,error_flags,uptime_seconds,sensor_type,manufacturer,notes
+silva-000001,51.0447,-114.0719,1110,3.7,82,-72,8,22.4,38.2,1011.3,25.5,245,0.5,3.1,6.8,9.7,87,0.02,0.11,2025-07-27T09:00:00Z,,1310400,wildfire_v2,Dryad-like Co,
+silva-000001,51.0447,-114.0719,1110,3.7,81,-73,7,22.8,39.1,1011.1,26.1,250,0.52,3.2,6.9,9.8,88,0.021,0.12,2025-07-27T09:00:00Z,,1310430,wildfire_v2,Dryad-like Co,
+silva-000001,51.0447,-114.0719,1110,3.69,81,-71,9,23.1,40.0,1010.8,26.8,255,0.48,3.0,6.7,9.5,85,0.019,0.10,2025-07-27T09:00:00Z,,1310460,wildfire_v2,Dryad-like Co,
+silva-000002,51.0450,-114.0715,1115,3.8,85,-68,10,21.9,37.5,1012.0,22.3,240,0.45,2.9,6.5,9.2,84,0.015,0.09,2025-07-27T09:00:00Z,,1310400,wildfire_v2,Dryad-like Co,
+silva-000002,51.0450,-114.0715,1115,3.8,84,-69,9,22.2,38.0,1011.8,23.1,242,0.47,3.0,6.6,9.4,85,0.016,0.095,2025-07-27T09:00:00Z,,1310430,wildfire_v2,Dryad-like Co,

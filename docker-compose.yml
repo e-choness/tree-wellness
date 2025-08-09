@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  sensor-simulator:
+    build: .
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./data:/app/data:ro
+    command: node dist/cli.js --num-devices 3 --frequency-seconds 10 --mqtt-broker mqtt://mosquitto:1883
+    depends_on:
+      - mosquitto
+      - http-server
+    networks:
+      - sensor-net
+
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    networks:
+      - sensor-net
+
+  http-server:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - sensor-net
+
+  mqtt-subscriber:
+    image: eclipse-mosquitto:2.0
+    command: mosquitto_sub -h mosquitto -t "sensors/+/telemetry" -v
+    depends_on:
+      - mosquitto
+    networks:
+      - sensor-net
+
+networks:
+  sensor-net:
+    driver: bridge
