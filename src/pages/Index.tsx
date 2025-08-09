@@ -8,6 +8,7 @@ import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from '
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { toast } from '@/hooks/use-toast';
+import { ModeToggle } from '@/components/theme-toggle';
 
 const Index = () => {
   // San Francisco area center
@@ -26,6 +27,9 @@ const Index = () => {
   return (
     <main className="container mx-auto py-10 space-y-10">
       <header className="space-y-4 text-center">
+        <div className="absolute top-4 right-4">
+          <ModeToggle />
+        </div>
         <h1 className="text-4xl font-bold tracking-tight">
           Arbor Vista — Tree Sensor Map & 3D NeRF Viewer
         </h1>

@@ -28,7 +28,7 @@ export default function MapLeaflet({ sensors, center, zoom = 12, onSelect }: Pro
   const position: [number, number] = useMemo(() => [center.lat, center.lon], [center.lat, center.lon]);
 
   return (
-    <div className="w-full h-[70vh] rounded-lg overflow-hidden border bg-card">
+    <div className="relative z-10 w-full h-[70vh] rounded-lg overflow-hidden border bg-card">
       {/* @ts-ignore - react-leaflet props typing mismatch in this environment */}
       <AnyMapContainer center={position} zoom={zoom} scrollWheelZoom={true} className="w-full h-full">
         {/* @ts-ignore */}
@@ -53,3 +53,4 @@ export default function MapLeaflet({ sensors, center, zoom = 12, onSelect }: Pro
     </div>
   );
 }
+
